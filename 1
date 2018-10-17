@@ -1,0 +1,67 @@
+DataBase-Management System,DBMS
+
+---
+在文件处理系统中存储阻止信息的主要弊端包括：
+    数据的冗余和不一致(data redundancy and inconsistency)
+    数据访问困难(difficulty in accessing data)
+    数据孤立data isolation
+    完整性问题integrity problem
+    原子性问题atomicity problem
+    并发访问异常concurrent-access anomaly
+    安全性问题security problem
+
+---数据视图
+数据抽象
+    物理层physical level
+    逻辑层logical level
+    视图层view level
+
+实例instance
+模式schema
+
+数据模型
+    关系模型          relational model
+    实体-联系模型     entity-relationship model
+    基于对象的数据模型object-based data model
+    半结构化的数据模型semistructured data model    可扩展标记语言eXtensible Markup Language,XML
+
+数据库语言
+    data-manipulation language,DML:procedural DML和declarative DML
+    data-definition language,DDL
+        一致性约束 consistency constraint
+        域约束     domain constraint: 可以取的值
+        参照完整性 reference integrity:
+        断言       assertion:
+        授权       authorization:
+        数据字典   data dictionary里有元数据metadata(schema)
+
+---存储管理器
+包括:
+    权限及完整性管理器   authorization and integrity manager
+    事务管理器           transaction manager
+    文件管理器           file manager
+    缓冲区管理器         buffer manager
+
+实现的数据结构:
+    数据文件 data files
+    数据字典 data dictionary
+    索引     index
+
+---查询处理器
+包括:
+    DDL解释器 DDL interpreter
+    DDL编译器 DDL compiler    进行查询优化query optimization
+    查询执行引擎query evaluation engine: 执行DDL编译器产生的低级指令
+
+---事务管理
+事务transaction：在数据库上进行的基本操作的集合
+对事务的要求：
+    原子性atomicity
+    一致性consistency
+    持久性durability
+
+
+
+
+
+

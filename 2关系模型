@@ -1,0 +1,18 @@
+表 关系relation
+行 元组tuple
+列 属性attribute
+
+超码super key，是一个或多个属性的集合，唯一标示一个元组
+超码的任意超集也是超码，我们只对这样一种超码感兴趣，它的任意真子集都不是超码，这样的最小超码成为候选码candidate key
+主码primary key，被数据库设计者选中的候选码
+一个关系模式r1可能在它的属性中包含另一个关系模式r2的主码，这个属性在r1中叫r2的外码foreign key，r1称为外码依赖的参照关系referencing relation，r2叫外码的被参照关系referenced relation
+
+---关系运算
+选择 投影 自然连接 笛卡尔积 并
+
+
+
+
+
+
+

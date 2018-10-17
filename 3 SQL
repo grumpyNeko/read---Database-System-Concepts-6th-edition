@@ -1,0 +1,194 @@
+---基本数据类型
+char(n)     固定长度字符串，长度n；如果实际存入的字符串长度不够n，自动追加空格
+varchar(n)  可变长度字符串，最大长度n
+int
+smallint
+numeric(p,d) 定点数，一共p位数字（不包括一个符号位），小数点后有d位，如：numeric(3,1)可以存储44.5
+real,double precision 浮点数，双精度浮点数
+float(n) 精度至少为n的浮点数
+
+---SQL查询
+SELECT a1,a2
+FROM r1,r2
+WHERE P;
+
+子句执行顺序，from，where，select
+
+FROM: 对r1，r2作笛卡尔积
+    for each 元组t1 in 关系r1:
+        for each 元组t2 in 关系r2:
+            连接元组t1 t2成一个元组t
+
+WHERE: 用P筛选t
+SELECT: 对于每筛选后的元组，输出对应的属性
+
+---自然连接 natural join
+在两个关系中都出现的属性，这些属性的值相同的元组，合并成一个元组
+
+在from子句中使用自然连接
+SELECT A1，A2
+FROM r1 natural join r2
+WHERE P;
+
+---附加的基本运算
+更名
+字符串
+属性说明
+排列次序
+where子句谓词
+
+---集合运算
+union
+intersect
+except
+
+---空值
+算数运算：任一为空，结果为空
+比较运算：结果是true false之外的第三个逻辑值unknown
+and:
+true    and unknown == unknown
+false   and unknown == false
+unknown and unknown == unknown
+or:
+true    or unknown == true
+false   or unknown == unknown
+unknown or unknown == unknwn
+not:
+not unknown == unknown
+如果where子句谓词计算出false或者unknown，这个元组不能加入结果集中
+如果两个元组在所有属性上的值相同，包括空值，它们是相同元组
+
+---聚集函数
+输入值的集合，返回单个值
+avg
+min
+max
+sum
+count
+
+---group by分组聚集
+select a1, avg(a2) as avg_salary
+from r
+group by a1;
+
+按照属性a1从r中构造多个分组(元组的集合)，select在这几个分组上运行
+a1之外的属性都应该被聚集，select只能a1和聚集函数
+
+
+---having子句
+
+SELECT a1, avg(a2) as avg_salary
+FROM r
+WHERE P
+GROUP BY a1
+HAVING avg(a2)>100;
+
+from:笛卡尔积
+where:筛选from的结果
+group by:where的结果
+having:筛选group by的结果
+select:...
+
+---对空值的聚集
+除count()之外的聚集函数忽略空值
+
+---嵌套子查询
+in
+not in
+some
+all
+
+SELECT DISTINCT course_id
+FROM section
+WHERE semester = "Fall" and year = 2009 and
+    course_id in(SELECT course_id
+                 FROM   section
+                 WHERE  semester = "Spring" and year = 2010);
+
+SELECT name
+FROM   instructor
+WHERE  salary > some(SELECT salary
+                     FROM instructor
+                     WHERE dept_name = "Biology");
+假设子查询
+(SELECT salary
+ FROM instructor
+ WHERE dept_name = "Biology");
+返回(v1, v2,...)
+则where子句的条件等价于:salary>v1 or salary>v2 or ...
+
+---空关系测试
+exists
+not exists
+
+---
+select a1
+from r1 as S
+where P1 and exists(
+                    select *
+                    from S
+                    where P2
+                    )
+内层查询可以访问外层查询定义的标识符S，这种内层查询叫相关子查询correlated subquery
+
+---重复元组存在性测试
+unique
+not unique
+
+---from子句中的子查询
+因为select-from-where返回关系，所以可以放到任何关系可以出现的地方
+select a1,a2
+from (  select a1, avg(a3)
+        from r
+        group by a1) as r2(a1, a2)
+where a2 > 100;
+
+---with子句
+定义临时关系
+with r1(dept_name, value) as
+    (select dept_name, sum(salary)
+     from instructor
+     group by dept_name),
+     r2(value) as
+     (select avg(value)
+      from dept_total)
+select  dept_name
+from    r1,r2
+where   r1.value >= r2.value;
+
+---标量子查询scalar subquery
+标量子查询: 查询返回的关系里只有一个元组，这个元组里只有一个属性
+标量子查询 可以出现在 任何返回单个值的表达式能出现的地方
+
+--- ---数据库的修改
+
+---删除
+
+---插入
+insert into r(a1, a2)
+    values(,)
+
+insert into r1
+    select a1, a2
+    from r2
+    where P;
+
+---更新
+update r
+set a = ...
+where P;
+
+---case
+case
+    when p1 then result1
+    when p2 then result2
+    ...
+    else result0
+end
+满足p1, 返回result1
+满足p2, 返回result2
+...
+
+
+
+
